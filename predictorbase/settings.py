@@ -55,7 +55,7 @@ ROOT_URLCONF = 'predictorbase.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'predictorbase.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'predictor',
+        'NAME': 'predictor_db',
         'USER': 'postgres',
         'PASSWORD': 'ronit123',
         'HOST': 'localhost',
