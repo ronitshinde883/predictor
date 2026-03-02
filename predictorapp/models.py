@@ -10,20 +10,7 @@ class University(models.Model):
     
     def __str__(self):
         return self.name
-class Category(models.Model):
-    CATEGORY_CHOICES = [
-        ("OPEN", "OPEN"),
-        ("OBC", "OBC"),
-        ("SC", "SC"),
-        ("ST", "ST"),
-        ("EWS", "EWS"),
-        ("NT", "NT"),
-        ("VJ", "VJ"),
-    ]
-    category=models.CharField(
-        max_length=20,
-        choices=CATEGORY_CHOICES        
-    )
+
 
 class College(models.Model):
     name=models.CharField(max_length=100)
@@ -42,7 +29,19 @@ class Branch(models.Model):
 class Cutoff(models.Model):
     college=models.ForeignKey(College,on_delete=models.CASCADE)
     branch=models.ForeignKey(Branch,on_delete=models.CASCADE)
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
+    CATEGORY_CHOICES = [
+        ("OPEN", "OPEN"),
+        ("OBC", "OBC"),
+        ("SC", "SC"),
+        ("ST", "ST"),
+        ("EWS", "EWS"),
+        ("NT", "NT"),
+        ("VJ", "VJ"),
+    ]
+    category=models.CharField(
+        max_length=20,
+        choices=CATEGORY_CHOICES        
+    )
     percentile = models.FloatField()
     year = models.IntegerField()
     
@@ -56,7 +55,6 @@ class Student(models.Model):
     full_name=models.CharField(max_length=100)
     email=models.EmailField()
     cet_percentile=models.FloatField()
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
     HOMEUNIVERSITY=[
         ('YES','YES'),
         ('NO','NO')

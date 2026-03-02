@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import Userprofile,Student,Cutoff,Branch,College,University,Category
+from .models import Userprofile,Student,Cutoff,Branch,College,University
 from django.contrib import messages
 # Create your views here.
 def home(request):
@@ -61,3 +61,4 @@ def student_detail(request):
         "branches": branches,
         "categories": Student.CATEGORY_CHOICES
     })
+    #database work pending
