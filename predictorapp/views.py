@@ -60,13 +60,13 @@ def student_detail(request):
         "categories": Student.CATEGORY_CHOICES
     })
     #database work pending
-# def predict_college(request,student_id):
-#     student = Student.objects.get(id=student_id)
-#     colleges=Cutoff.objects.filter(
-#         category=student.category,
-#         year=2026,
-#         branch=student.preferred_branch,
-#         percentile__lte=student.percentile,
-#     ).order_by("-Cutoff_percentile")
-#     #return render(request, "predict.html", {"colleges": colleges})(url will be discussed later)
-#     print(student.cet_percentile)
+def predict_college(request,student_id):
+    student = Student.objects.get(id=student_id)
+    colleges=Cutoff.objects.filter(
+        category=student.category,
+        year=2026,
+        branch=student.preferred_branch,
+        percentile__lte=student.percentile,
+    ).order_by("-Cutoff_percentile")
+    #return render(request, "predict.html", {"colleges": colleges})(url will be discussed later)
+    print(student.cet_percentile)
