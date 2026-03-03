@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from .models import Userprofile,Student,Cutoff,Branch,College,University
 from django.contrib import messages
@@ -20,8 +20,6 @@ def register(request):
         )
 
 # 
-
-
 def student_detail(request):
 
     if request.method == "POST":
@@ -62,3 +60,13 @@ def student_detail(request):
         "categories": Student.CATEGORY_CHOICES
     })
     #database work pending
+# def predict_college(request,student_id):
+#     student = Student.objects.get(id=student_id)
+#     colleges=Cutoff.objects.filter(
+#         category=student.category,
+#         year=2026,
+#         branch=student.preferred_branch,
+#         percentile__lte=student.percentile,
+#     ).order_by("-Cutoff_percentile")
+#     #return render(request, "predict.html", {"colleges": colleges})(url will be discussed later)
+#     print(student.cet_percentile)

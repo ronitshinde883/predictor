@@ -22,12 +22,12 @@ class College(models.Model):
     
 class Branch(models.Model):
     name=models.CharField(max_length=100)
+    college=models.ForeignKey(College,on_delete=models.CASCADE)
     
     def __str__(self):
         return self.name
 
 class Cutoff(models.Model):
-    college=models.ForeignKey(College,on_delete=models.CASCADE)
     branch=models.ForeignKey(Branch,on_delete=models.CASCADE)
     CATEGORY_CHOICES = [
         ("OPEN", "OPEN"),
@@ -46,15 +46,15 @@ class Cutoff(models.Model):
     year = models.IntegerField()
     
     class Meta:
-        unique_together = ("college", "branch", "category", "year")
+        unique_together = ("branch", "category", "year")
         
     def __str__(self):
-        return f"{self.college} - {self.branch} ({self.year})"    
+        return f"{self.branch.college} - {self.branch.name} - {self.category}"    
     
 class Student(models.Model):
     full_name=models.CharField(max_length=100)
     email=models.EmailField()
-    cet_percentile=models.FloatField()
+    percentile=models.FloatField()
     HOMEUNIVERSITY=[
         ('YES','YES'),
         ('NO','NO')
