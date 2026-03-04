@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
 from .models import Userprofile,Student,Cutoff,Branch,College,University
 from django.contrib import messages
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 def home(request):
     return HttpResponse('hello i am ronit')
@@ -19,19 +20,19 @@ def register(request):
             phone=phone,
         )
 
-# 
+@csrf_exempt
 def student_detail(request):
 
     if request.method == "POST":
 
         full_name = request.POST.get("full_name")
-        cet_percentile = request.POST.get("cet_percentile")
+        percentile = request.POST.get("percentile")
         category = request.POST.get("category")
         home_university = request.POST.get("home_university")
         preferred_branch_id = request.POST.get("preferred_branch")
 
         
-        if not all([full_name, cet_percentile, category, home_university, preferred_branch_id]):
+        if not all([full_name,percentile, category, home_university, preferred_branch_id]):
             messages.error(request, "Please fill all fields")
             return redirect("home")
 
@@ -44,15 +45,15 @@ def student_detail(request):
     
         student = Student.objects.create(
             full_name=full_name,
-            cet_percentile=float(cet_percentile),
+            percentile=float(percentile),
             category=category,
             home_university=home_university,
             preferred_branch=preferred_branch
         )
-
-        messages.success(request, f"Student {student.full_name} saved successfully!")
-        return redirect("home")
-
+        return JsonResponse({
+            "message": f"Student {student.full_name} saved successfully!",
+            "student_id": student.id
+        })
     branches = Branch.objects.all()
 
     return render(request, "/", {
@@ -67,6 +68,16 @@ def predict_college(request,student_id):
         year=2026,
         branch=student.preferred_branch,
         percentile__lte=student.percentile,
-    ).order_by("-Cutoff_percentile")
+    ).select_related("college", "branch").order_by("-percentile")
     #return render(request, "predict.html", {"colleges": colleges})(url will be discussed later)
-    print(student.cet_percentile)
+    data = []
+
+    for c in colleges:
+        data.append({
+            "college": c.college.name,
+            "branch": c.branch.name,
+            "cutoff": c.percentile,
+            "year": c.year
+        })
+
+    return JsonResponse({"results": data})

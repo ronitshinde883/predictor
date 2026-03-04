@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'predictorbase.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'predict_db',
+        'NAME': 'predictclg_db',
         'USER': 'postgres',
         'PASSWORD': 'ronit123',
         'HOST': 'localhost',
