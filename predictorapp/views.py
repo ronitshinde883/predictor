@@ -83,7 +83,7 @@ def predict_college( request, student_id):
     return JsonResponse({"results": data})
 
 
-def cutoff_explorer( request):
+def cutoff_explorer(request, college_id, branch_id, year, category):
     college_id=request.GET.get("college")
     branch_id=request.GET.get("branch")
     year=request.GET.get("year")
