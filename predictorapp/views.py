@@ -3,11 +3,11 @@ from django.http import HttpResponse,JsonResponse
 from .models import Userprofile,Student,Cutoff,Branch,College,University
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
-# Create your views here.
-def home(request):
+
+def home ( request):
     return HttpResponse('hello i am ronit')
 
-def register(request):
+def register( request):
     if request.method=='POST':
         name=request.POST.get("name")
         email=request.POST.get("email")
@@ -21,7 +21,7 @@ def register(request):
         )
 
 @csrf_exempt
-def student_detail(request):
+def student_detail( request):
 
     if request.method == "POST":
 
@@ -61,7 +61,7 @@ def student_detail(request):
         "categories": Student.CATEGORY_CHOICES
     })
     #database work pending
-def predict_college(request,student_id):
+def predict_college( request, student_id):
     student = Student.objects.get(id=student_id)
     colleges=Cutoff.objects.filter(
         category=student.category,
@@ -81,3 +81,30 @@ def predict_college(request,student_id):
         })
 
     return JsonResponse({"results": data})
+
+
+def cutoff_explorer( request):
+    college_id=request.GET.get("college")
+    branch_id=request.GET.get("branch")
+    year=request.GET.get("year")
+    category=request.GET.get("category")
+    
+    cutoffs= Cutoff.objects.filter(
+        college_id=college_id,
+        branch_id=branch_id,
+        year=year,
+        category=category
+    )
+    data=[]
+    for c in cutoffs:
+        data.append({
+            "college":c.college.name,
+            "branch": c.branch.name,
+            "year": c.year,
+            "category": c.category,
+            "round": c.round,
+            "percentile": c.percentile,
+        })
+    return JsonResponse({"result":data})
+        
+    
