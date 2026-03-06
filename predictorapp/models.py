@@ -1,9 +1,13 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Userprofile(models.Model):
-    name=models.CharField(max_length=100)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    phone=models.CharField(max_length=15)
     
+    def __str__(self):
+        return self.name
 
 class University(models.Model):
     name=models.CharField(max_length=100)
@@ -53,10 +57,9 @@ class Cutoff(models.Model):
         return f"{self.college} - {self.branch.name} - {self.category}"    
     
 class Student(models.Model):
-    full_name=models.CharField(max_length=100)
-    email=models.EmailField()
+    user = models.ForeignKey(Userprofile, on_delete=models.CASCADE, null=True, blank=True)
     percentile=models.FloatField()
-    HOMEUNIVERSITY=[
+    HOME_UNIVERSITY=[
         ('YES','YES'),
         ('NO','NO')
     ]
@@ -76,7 +79,7 @@ class Student(models.Model):
     )
     home_university=models.CharField(
         max_length=3,
-        choices=HOMEUNIVERSITY
+        choices=HOME_UNIVERSITY
     )
     preferred_branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
