@@ -12,6 +12,4 @@ urlpatterns = [
         views.cutoff_explorer,
         name='cutoff_explorer'
     ),
-    path("cutoff-explorer/", views.cutoff_explorer_page, name="cutoff_explorer_page"),
-    path("login/", views.login_view, name="login")
 ]

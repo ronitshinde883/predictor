@@ -25,8 +25,6 @@ def register( request):
             user=user,
             phone=phone
         )
-
-        login(request, user)
         return redirect("home")
     return render(request,"register.html")
 
@@ -42,7 +40,7 @@ def predict_college( request, student_id):
         branch=student.preferred_branch,
         percentile__lte=student.percentile,
     ).select_related("college", "branch").order_by("-percentile")
-    return render(request, "predict.html", {"colleges": colleges})
+    # return render(request, "predict.html", {"colleges": colleges})
     data = []
 
     for c in colleges:
@@ -125,29 +123,3 @@ def student_detail(request):
         "branches": branches,
         "categories": Student.CATEGORY_CHOICES
     })
-@login_required 
-def cutoff_explorer_page(request):
-    colleges = College.objects.all()
-    branches = Branch.objects.all()
-
-    return render(request, "cutoff_explorer.html", {
-        "colleges": colleges,
-        "branches": branches,
-        "categories": Cutoff.CATEGORY_CHOICES
-    })
-
-def login_view(request):
-
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect("home")
-        else:
-            messages.error(request,"Invalid username or password")
-
-    return render(request, "login.html")
