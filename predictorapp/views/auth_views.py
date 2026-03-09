@@ -4,7 +4,7 @@ from ..models import Userprofile,Student,Cutoff,Branch,College,University
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import login as auth_login, authenticate
 from django.contrib.auth.models import User
 
 def register( request):
@@ -24,6 +24,9 @@ def register( request):
             user=user,
             phone=phone
         )
+        user = authenticate(username=username, password=password)
+        if user:
+            auth_login(request, user) 
         return redirect("home")
     return render(request,"register.html")
 
