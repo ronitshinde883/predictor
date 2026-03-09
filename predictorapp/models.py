@@ -7,7 +7,7 @@ class Userprofile(models.Model):
     phone=models.CharField(max_length=15)
     
     def __str__(self):
-        return self.name
+        return self.user.username
 
 class University(models.Model):
     name=models.CharField(max_length=100)
@@ -86,6 +86,5 @@ class Student(models.Model):
     
     
     def __str__(self):
-        return self.full_name
-
+        return f"{self.user.user.username} - {self.percentile}"
     

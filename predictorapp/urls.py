@@ -1,17 +1,18 @@
 from django.contrib import admin
 from django.urls import path
-from . import views
+from .views import auth_views,details_views,predict_views,explorer_views
 
 urlpatterns = [
-    path("",views.home,name="home"),
-    path("student/", views.student_detail, name="student_detail"),
-    path("register/",views.register,name="register"),
-    path("predict/<int:student_id>/", views.predict_college, name="predict_college"),
-    path(
-        'cutoff/<int:college_id>/<int:branch_id>/<int:year>/<str:category>/',
-        views.cutoff_explorer,
-        name='cutoff_explorer'
+    #auth urls
+    path("", auth_views.home, name="home"),
+    path("register/", auth_views.register, name="register"),
+    path("login/", auth_views.login, name="login"),
+    path("logout/", auth_views.logout, name="logout"),
+    #detail urls
+    path("student/", details_views.student_detail, name="student_detail"),
+    # predict urls
+    path("predict/<int:student_id>/", predict_views.predict_college, name="predict_college"),
+    #explorer urls
+    path("cutoff/<int:college_id>/<int:branch_id>/<int:year>/<str:category>/",explorer_views.cutoff_explorer,name="cutoff_explorer",
     ),
-    path("login/",views.login,name="login"),
-    path("logout/",views.logout,name='logout')
 ]
