@@ -11,7 +11,6 @@ from django.contrib.auth.models import User
 def predict_college(request, student_id):
 
     student = Student.objects.get(id=student_id)
-
     colleges = Cutoff.objects.filter(
         category=student.category,
         year=2026,
