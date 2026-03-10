@@ -7,7 +7,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
-
 @login_required
 def cutoff_explorer(request, college_id, branch_id, year, category):
     college_id=request.GET.get("college")
@@ -32,3 +31,10 @@ def cutoff_explorer(request, college_id, branch_id, year, category):
             "percentile": c.percentile,
         })
     return JsonResponse({"result":data})
+
+def allcollege(request):
+    colleges=College.objects.all()
+    
+    return render(request,"colleges.html",{
+        "colleges":colleges
+    })

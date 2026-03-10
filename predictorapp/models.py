@@ -21,6 +21,7 @@ class College(models.Model):
     city=models.CharField(max_length=50)
     university=models.ForeignKey(University,on_delete=models.CASCADE)
     
+    
     def __str__(self):
         return self.name
     
@@ -88,3 +89,14 @@ class Student(models.Model):
     def __str__(self):
         return f"{self.user.user.username} - {self.percentile}"
     
+    
+class CollegeDetail(models.Model):
+    college=models.ForeignKey(College,on_delete=models.CASCADE)
+    fees=models.IntegerField(null=True,blank=True)
+    average_package = models.FloatField(null=True, blank=True)
+    highest_package = models.FloatField(null=True, blank=True)
+    hostel_available = models.BooleanField(default=False)
+    website = models.URLField(null=True, blank=True)
+    
+    def __str__(self):
+        return self.college.name
