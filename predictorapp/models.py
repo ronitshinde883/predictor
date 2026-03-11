@@ -21,7 +21,6 @@ class College(models.Model):
     city=models.CharField(max_length=50)
     university=models.ForeignKey(University,on_delete=models.CASCADE)
     
-    
     def __str__(self):
         return self.name
     
@@ -91,8 +90,7 @@ class Student(models.Model):
     
     
 class CollegeDetail(models.Model):
-    college=models.ForeignKey(College,on_delete=models.CASCADE)
-    cutoff=models.ForeignKey(Cutoff,on_delete=models.CASCADE,null=True,blank=True)
+    college=models.OneToOneField(College,on_delete=models.CASCADE)
     fees=models.IntegerField(null=True,blank=True)
     average_package = models.FloatField(null=True, blank=True)
     highest_package = models.FloatField(null=True, blank=True)

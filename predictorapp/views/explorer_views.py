@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from ..views import details_views,auth_views,predict_views
 
 
 # def cutoff_explorer(request, college_id, branch_id, year, category):
@@ -34,7 +35,6 @@ from django.contrib.auth.models import User
 @login_required
 def allcollege(request):
     colleges=College.objects.all()
-    
     return render(request,"colleges.html",{
         "colleges":colleges
     })

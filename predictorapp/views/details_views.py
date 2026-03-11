@@ -17,7 +17,7 @@ def student_detail(request):
         preferred_branch_id = request.POST.get("preferred_branch")
         
         
-        if not all([percentile, category, home_university, preferred_branch_id]):
+        if not all([percentile, category,home_university, preferred_branch_id]):
             messages.error(request, "Please fill all fields")
             return redirect("home")
         
@@ -36,7 +36,7 @@ def student_detail(request):
             preferred_branch=preferred_branch
         )
         messages.success(request, "Student details saved successfully!")
-        return redirect("register")
+        return redirect("predict_college", student_id=student.id)
       
     branches = Branch.objects.all()
 

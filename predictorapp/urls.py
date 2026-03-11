@@ -15,4 +15,5 @@ urlpatterns = [
     #explorer urls
     # path("cutoff/<int:college_id>/<int:branch_id>/<int:year>/<str:category>/",explorer_views.cutoff_explorer,name="cutoff_explorer",
     # ),
+    path("colleges/",explorer_views.allcollege, name="explore_colleges")
 ]
