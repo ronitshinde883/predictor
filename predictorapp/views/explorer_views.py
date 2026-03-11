@@ -7,31 +7,31 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 
-@login_required
-def cutoff_explorer(request, college_id, branch_id, year, category):
-    college_id=request.GET.get("college")
-    branch_id=request.GET.get("branch")
-    year=request.GET.get("year")
-    category=request.GET.get("category")
-    
-    cutoffs= Cutoff.objects.filter(
-        college_id=college_id,
-        branch_id=branch_id,
-        year=year,
-        category=category
-    )
-    data=[]
-    for c in cutoffs:
-        data.append({
-            "college":c.college.name,
-            "branch": c.branch.name,
-            "year": c.year,
-            "category": c.category,
-            "round": c.round,
-            "percentile": c.percentile,
-        })
-    return JsonResponse({"result":data})
 
+# def cutoff_explorer(request, college_id, branch_id, year, category):
+#     college_id=request.GET.get("college")
+#     branch_id=request.GET.get("branch")
+#     year=request.GET.get("year")
+#     category=request.GET.get("category")
+    
+#     cutoffs= Cutoff.objects.filter(
+#         college_id=college_id,
+#         branch_id=branch_id,
+#         year=year,
+#         category=category
+#     )
+#     data=[]
+#     for c in cutoffs:
+#         data.append({
+#             "college":c.college.name,
+#             "branch": c.branch.name,
+#             "year": c.year,
+#             "category": c.category,
+#             "round": c.round,
+#             "percentile": c.percentile,
+#         })
+#     return JsonResponse({"result":data})
+@login_required
 def allcollege(request):
     colleges=College.objects.all()
     

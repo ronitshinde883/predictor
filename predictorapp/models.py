@@ -92,6 +92,7 @@ class Student(models.Model):
     
 class CollegeDetail(models.Model):
     college=models.ForeignKey(College,on_delete=models.CASCADE)
+    cutoff=models.ForeignKey(Cutoff,on_delete=models.CASCADE,null=True,blank=True)
     fees=models.IntegerField(null=True,blank=True)
     average_package = models.FloatField(null=True, blank=True)
     highest_package = models.FloatField(null=True, blank=True)
