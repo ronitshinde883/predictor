@@ -6,11 +6,15 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from ..views import explorer_views,details_views,auth_views 
 
 @login_required
-def predict_college(request, student_id):
+def predict_college(request,student_id):
+    try:
+        student = Student.objects.get(id=student_id)
+    except Student.DoesNotExist:
+        return redirect("student_detail")
 
-    student = Student.objects.get(id=student_id)
     colleges = Cutoff.objects.filter(
         category=student.category,
         year=2026,
@@ -18,7 +22,7 @@ def predict_college(request, student_id):
         percentile__lte=student.percentile,
     ).select_related("college", "branch").order_by("-percentile")
 
-    return render(request, "predict.html", {
+    return render(request,"predict.html", {
         "student": student,
         "colleges": colleges
     })

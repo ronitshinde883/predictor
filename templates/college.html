@@ -1,0 +1,15 @@
+<h2>All Colleges</h2>
+
+<ul>
+
+{% for college in colleges %}
+
+<li>
+<a href="{% url 'college_detail'college.id %}">
+{{ college.name }}
+</a>
+</li>
+
+{% endfor %}
+
+</ul>

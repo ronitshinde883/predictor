@@ -1,0 +1,36 @@
+<h2>Enter Student Details</h2>
+
+<form method="POST">
+    {% csrf_token %}
+
+    <!-- Percentile -->
+    <label>Percentile</label><br>
+    <input type="number" name="percentile" step="0.01" required>
+    <br><br>
+
+    <!-- Category -->
+    <label>Category</label><br>
+    <select name="category" required>
+        {% for value,label in categories %}
+        <option value="{{ value }}">{{ label }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <!-- Home University -->
+    <label>Home University</label><br>
+    <input type="text" name="home_university" placeholder="Enter your home university" required>
+    <br><br>
+
+    <!-- Preferred Branch -->
+    <label>Preferred Branch</label><br>
+    <select name="preferred_branch" required>
+        {% for branch in branches %}
+        <option value="{{ branch.id }}">{{ branch.name }}</option>
+        {% endfor %}
+    </select>
+    <br><br>
+
+    <button type="submit">Predict Colleges</button>
+
+</form>
