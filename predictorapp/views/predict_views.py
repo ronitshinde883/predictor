@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse,JsonResponse
-from ..models import Userprofile,Student,Cutoff,Branch,College,University
+from ..models import Userprofile,Student,Cutoff,Branch,College,University,PercentilePredictor
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -26,3 +26,13 @@ def predict_college(request,student_id):
         "student": student,
         "colleges": colleges
     })
+    
+def predict_percentile(request):
+    if request.method=='POST':
+        score=int(request.POST.get("score"))
+        result=PercentilePredictor.objects.filter(score__lte=score).order_by("-score").first()
+        
+        return render(request,"score.html",{
+            "percentile": result.percentile
+        })
+    return render(request,"score.html")

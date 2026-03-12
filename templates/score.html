@@ -1,0 +1,16 @@
+<h2>Score to Percentile Predictor</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<input type="number" name="score" placeholder="Enter your score">
+
+<button type="submit">Predict</button>
+
+</form>
+
+{% if percentile %}
+
+<h3>Your Expected Percentile: {{ percentile }}</h3>
+
+{% endif %}

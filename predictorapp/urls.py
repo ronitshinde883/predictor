@@ -12,8 +12,12 @@ urlpatterns = [
     path("student/", details_views.student_detail, name="student_detail"),
     # predict urls
     path("predict/<int:student_id>/", predict_views.predict_college, name="predict_college"),
+    path("percentile/", predict_views.predict_percentile, name="percentile"),
     #explorer urls
     # path("cutoff/<int:college_id>/<int:branch_id>/<int:year>/<str:category>/",explorer_views.cutoff_explorer,name="cutoff_explorer",
     # ),
-    path("colleges/",explorer_views.allcollege, name="explore_colleges")
+    # path("colleges/",explorer_views.allcollege, name="college_detail")
+    path("colleges/<int:college_id>/",explorer_views.allcollege, name="college_detail"),
+    path("colleges/",explorer_views.allcollege, name="colleges"),
+    
 ]

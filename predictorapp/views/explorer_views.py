@@ -1,7 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse,JsonResponse
-from ..models import Userprofile,Student,Cutoff,Branch,College,University
-from django.contrib import messages
+from ..models import Userprofile,Student,Cutoff,Branch,College,University,CollegeDetail
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
@@ -33,8 +32,8 @@ from ..views import details_views,auth_views,predict_views
 #         })
 #     return JsonResponse({"result":data})
 @login_required
-def allcollege(request):
-    colleges=College.objects.all()
-    return render(request,"colleges.html",{
+def allcollege(request,college_id=None):
+    colleges=CollegeDetail.objects.all()
+    return render(request,"college.html",{
         "colleges":colleges
     })
