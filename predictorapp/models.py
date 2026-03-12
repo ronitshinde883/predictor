@@ -99,3 +99,7 @@ class CollegeDetail(models.Model):
     
     def __str__(self):
         return self.college.name
+class PercentilePredictor(models.Model):
+    score=models.IntegerField()
+    percentile=models.FloatField()
+    
