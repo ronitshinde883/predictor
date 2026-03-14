@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse,JsonResponse
-from ..models import Userprofile,Student,Cutoff,Branch,College,University,PercentilePredictor
+from ..models import Userprofile,Student,Cutoff,Branch,College,University,PercentilePredictor,Prediction
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
@@ -21,6 +21,14 @@ def predict_college(request,student_id):
         branch=student.preferred_branch,
         percentile__lte=student.percentile,
     ).select_related("college", "branch").order_by("-percentile")
+    Prediction.objects.filter(student=student).delete()
+    for c in colleges:
+        Prediction.objects.create(
+            student=student,
+            college=c.college,
+            branch=c.branch,
+            cutoff_percentile=c.percentile
+        )
 
     return render(request,"predict.html", {
         "student": student,

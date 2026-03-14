@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import College,Cutoff,University,Userprofile,Branch,Student,CollegeDetail,PercentilePredictor
+from .models import College,Cutoff,University,Userprofile,Branch,Student,CollegeDetail,PercentilePredictor,Prediction
 admin.site.register(College)
 admin.site.register(Cutoff)
 admin.site.register(University)
@@ -8,3 +8,4 @@ admin.site.register(Branch)
 admin.site.register(Student)
 admin.site.register(CollegeDetail)
 admin.site.register(PercentilePredictor)
+admin.site.register(Prediction)

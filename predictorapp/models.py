@@ -85,6 +85,7 @@ class Student(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     
     
+    
     def __str__(self):
         return f"{self.user.user.username} - {self.percentile}"
     
@@ -102,4 +103,20 @@ class CollegeDetail(models.Model):
 class PercentilePredictor(models.Model):
     score=models.IntegerField()
     percentile=models.FloatField()
+    
+class Prediction(models.Model):
+    student = models.OneToOneField(Student, on_delete=models.CASCADE)
+    college = models.ForeignKey(College, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    cutoff_percentile = models.FloatField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.student.name
+    
+    
+    
+    class Meta:
+        unique_together = ['student', 'college', 'branch']    
+        
     
