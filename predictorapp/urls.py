@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from .views import auth_views,details_views,predict_views,explorer_views
+from .views import auth_views,details_views,predict_views,explorer_views,test_views
 
 urlpatterns = [
     #auth urls
@@ -19,5 +19,6 @@ urlpatterns = [
     # path("colleges/",explorer_views.allcollege, name="college_detail")
     path("colleges/<int:college_id>/",explorer_views.allcollege, name="college_detail"),
     path("colleges/",explorer_views.allcollege, name="colleges"),
+    path('api/test/',test_views.test_api),
     
 ]
