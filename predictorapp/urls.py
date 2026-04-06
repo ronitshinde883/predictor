@@ -1,24 +1,27 @@
 from django.contrib import admin
 from django.urls import path
 from .views import auth_views,details_views,predict_views,explorer_views,test_views
+from .views.auth_views import RegisterAPI,LoginAPI,LogoutAPI,ResetPasswordAPI,ForgotPasswordAPI
 
 urlpatterns = [
-    #auth urls
-    path("", auth_views.home, name="home"),
-    path("register/", auth_views.register, name="register"),
-    path("login/", auth_views.login_view, name="login"),
-    path("logout/", auth_views.logout_view, name="logout"),
+
     #detail urls
     path("student/", details_views.student_detail, name="student_detail"),
     # predict urls
     path("predict/<int:student_id>/", predict_views.predict_college, name="predict_college"),
     path("percentile/", predict_views.predict_percentile, name="percentile"),
-    #explorer urls
-    # path("cutoff/<int:college_id>/<int:branch_id>/<int:year>/<str:category>/",explorer_views.cutoff_explorer,name="cutoff_explorer",
-    # ),
-    # path("colleges/",explorer_views.allcollege, name="college_detail")
     path("colleges/<int:college_id>/",explorer_views.allcollege, name="college_detail"),
     path("colleges/",explorer_views.allcollege, name="colleges"),
     path('api/test/',test_views.test_api),
+    
+    
+    
+    #Auth urls
+    
+    path("api/register/", RegisterAPI.as_view(), name="api_register"),
+    path("api/login/", LoginAPI.as_view(), name="api_login"),
+    path("api/logout/", LogoutAPI.as_view(), name="api_logout"),
+    path("api/forgot-password/", ForgotPasswordAPI.as_view(), name="api_forgot_password"),
+    path("api/reset-password/<int:uid>/<str:token>/", ResetPasswordAPI.as_view(), name="api_reset_password")
     
 ]
